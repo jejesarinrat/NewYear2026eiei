@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ครบรอบ 3 ปีของเรา</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            background-color: #000;
+            color: #ffc2e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        /* Floating squares background */
+        .floating-squares {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .square {
+            position: absolute;
+            background-color: rgba(255, 20, 147, 0.1);
+            border: 1px solid rgba(255, 20, 147, 0.2);
+            border-radius: 8px;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+                opacity: 0.7;
+            }
+        }
+        
+        /* Heart background - อลังการขึ้น! */
+        .heart-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        .heart {
+            position: absolute;
+            color: #ff1493;
+            font-size: 24px;
+            opacity: 0;
+            animation: heartFloat 20s infinite linear;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+        }
+        
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+                transform: translateY(90vh) rotate(90deg) scale(1);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(70vh) rotate(180deg) scale(1.2);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translateY(50vh) rotate(270deg) scale(1);
+            }
+            70% {
+                opacity: 0.7;
+                transform: translateY(30vh) rotate(360deg) scale(0.8);
+            }
+            90% {
+                opacity: 0.5;
+                transform: translateY(10vh) rotate(450deg) scale(0.6);
+            }
+            100% {
+                transform: translateY(-100px) rotate(540deg) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        /* Screen styling */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .screen.active {
+            display: flex;
+        }
+        
+        .title {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            color: #ff69b4;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
+            font-weight: 500;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: #ffb6c1;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        
+        .instruction {
+            font-size: 1.5rem;
+            color: rgba(255, 182, 193, 0.9);
+            margin-top: 50px;
+            font-style: italic;
+            animation: blink 2s infinite;
+            position: fixed;
+            bottom: 60px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            border-top: 2px solid rgba(255, 105, 180, 0.3);
+            border-bottom: 2px solid rgba(255, 105, 180, 0.3);
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        /* Buttons */
+        .buttons {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 500;
+        }
+        
+        .btn-love {
+            background-color: #ff1493;
+            color: white;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .btn-dont-love {
+            background-color: #444;
+            color: #ccc;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.7);
+        }
+        
+        .btn-next {
+            background-color: #ff69b4;
+            color: white;
+            font-size: 1.5rem;
+            margin-top: 40px;
+            padding: 12px 30px;
+        }
+        
+        /* Input fields */
+        .input-container {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .input-field {
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            border: 2px solid #ff69b4;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            width: 250px;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
+        }
+        
+        .submit-btn {
+            padding: 12px 40px;
+            font-size: 1.3rem;
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.7);
+        }
+        
+        /* Effects - ระเบิดอลังการ! */
+        .explosion-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .explosion {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+        }
+        
+        .explosion-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .fire {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff3300 0%, #ff9900 70%, transparent 100%);
+            opacity: 0;
+            filter: blur(5px);
+        }
+        
+        .smoke {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #666 0%, transparent 70%);
+            opacity: 0;
+            filter: blur(10px);
+        }
+        
+        .shockwave {
+            position: absolute;
+            border: 3px solid rgba(255, 100, 100, 0.8);
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        /* จุ๊บ GIF ใหญ่กลางจอ! */
+        .kiss-gif {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 2000;
+            animation: kissGifPop 4s ease forwards;
+            pointer-events: none;
+        }
+        
+        @keyframes kissGifPop {
+            0% { 
+                transform: translate(-50%, -50%) scale(0); 
+                opacity: 0; 
+            }
+            15% { 
+                transform: translate(-50%, -50%) scale(1.2); 
+                opacity: 1; 
+            }
+            30% { 
+                transform: translate(-50%, -50%) scale(1); 
+                opacity: 1; 
+            }
+            70% { 
+                transform: translate(-50%, -50%) scale(1); 
+                opacity: 1; 
+            }
+            85% { 
+                transform: translate(-50%, -50%) scale(1.1); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(0); 
+                opacity: 0; 
+            }
+        }
+        
+        /* รูปภาพใหญ่กลางจอ! */
+        .wrong-image {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 500px;
+            max-height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(255, 0, 100, 0.8);
+            border: 5px solid #ff1493;
+            z-index: 2000;
+            animation: imagePop 3s ease forwards;
+        }
+        
+        @keyframes imagePop {
+            0% { 
+                transform: translate(-50%, -50%) scale(0); 
+                opacity: 0; 
+            }
+            20% { 
+                transform: translate(-50%, -50%) scale(1.2); 
+                opacity: 1; 
+            }
+            80% { 
+                transform: translate(-50%, -50%) scale(1.1); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(0); 
+                opacity: 0; 
+            }
+        }
+        
+        .message-box {
+            background-color: rgba(255, 20, 147, 0.1);
+            border: 1px solid rgba(255, 20, 147, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 20px 0;
+            text-align: left;
+            line-height: 1.8;
+            backdrop-filter: blur(5px);
+        }
+        
+        .warning {
+            color: #ffcc00;
+            background-color: rgba(255, 204, 0, 0.1);
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            font-size: 1.2rem;
+        }
+        
+        /* Final effects */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: #f00;
+            top: -10px;
+            z-index: 1000;
+        }
+        
+        .final-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow-y: auto;
+        }
+        
+        .final-message {
+            font-size: 2rem;
+            color: #ff69b4;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .final-input {
+            margin-top: 30px;
+        }
+        
+        .final-input-field {
+            padding: 12px 20px;
+            font-size: 1.5rem;
+            border: 2px solid #ff69b4;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            width: 300px;
+            text-align: center;
+        }
+        
+        .slap-image {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 600px;
+            max-height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.9);
+            border: 8px solid #ff1493;
+            z-index: 2000;
+            animation: slapImage 3s ease forwards;
+        }
+        
+        @keyframes slapImage {
+            0% { 
+                transform: translate(-50%, -50%) scale(0); 
+                opacity: 0; 
+            }
+            20% { 
+                transform: translate(-50%, -50%) scale(1.2); 
+                opacity: 1; 
+            }
+            80% { 
+                transform: translate(-50%, -50%) scale(1.1); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(0); 
+                opacity: 0; 
+            }
+        }
+        
+        .end-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 2001;
+            box-shadow: 0 0 60px rgba(255, 20, 147, 0.8);
+            border: 4px solid #ff69b4;
+            display: none;
+            backdrop-filter: blur(15px);
+        }
+        
+        .end-title {
+            font-size: 3.5rem;
+            color: #ff1493;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.8);
+        }
+        
+        .end-btn {
+            padding: 15px 60px;
+            font-size: 1.8rem;
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 40px;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .end-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.8);
+        }
+        
+        /* Click anywhere to continue */
+        .click-continue {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        /* Screen-specific styles */
+        #screen2 .btn-dont-love {
+            transition: all 0.2s ease;
+        }
+        
+        /* Love button full screen effect */
+        .love-fullscreen {
+            position: fixed !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            left: 0 !important;
+            top: 0 !important;
+            border-radius: 0 !important;
+            z-index: 1000 !important;
+            font-size: 5rem !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+        }
+        
+        /* Screen shake for explosion */
+        @keyframes screenShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+        
+        .screen-shake {
+            animation: screenShake 0.5s linear;
+        }
+        
+        /* Scrollable message box */
+        .scrollable-message {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .scrollable-message::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .scrollable-message::-webkit-scrollbar-track {
+            background: rgba(255, 20, 147, 0.1);
+            border-radius: 10px;
+        }
+        
+        .scrollable-message::-webkit-scrollbar-thumb {
+            background: #ff69b4;
+            border-radius: 10px;
+        }
+        
+        /* Game mode text */
+        .game-mode {
+            font-size: 1.2rem;
+            color: #ffb6c1;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="heart-background" id="heartBackground"></div>
+    <div class="floating-squares" id="floatingSquares"></div>
+    
+    <!-- Explosion container -->
+    <div class="explosion-container" id="explosionContainer"></div>
+    
+    <!-- Screens -->
+    <div class="screen active" id="screen1">
+        <h1 class="title">เธอคับ</h1>
+        <p class="subtitle">เรามีอะไรจะถาม...</p>
+        <div class="instruction">กดที่ใดก็ได้เพื่อไปต่อ</div>
+    </div>
+    
+    <div class="screen" id="screen2">
+        <h1 class="title">เธอรักเรามั้ย</h1>
+        <div class="buttons">
+            <button class="btn btn-love" id="loveBtn">รัก</button>
+            <button class="btn btn-dont-love" id="dontLoveBtn">ไม่รัก</button>
+        </div>
+        <div class="instruction" style="display:none;" id="screen2Continue">กดปุ่ม "รัก" ที่เต็มหน้าจอเพื่อไปต่อ!</div>
+        <p class="game-mode" id="gameModeText">ลองกด "ไม่รัก" ดูสิ แล้วจะเกิดอะไรขึ้น~</p>
+    </div>
+    
+    <div class="screen" id="screen3">
+        <h1 class="title">เราก็รักเธอน้าาา</h1>
+        <p class="subtitle">จุ๊บมั๊วะ</p>
+        <div class="instruction">กดที่ใดก็ได้เพื่อไปต่อ</div>
+    </div>
+    
+    <div class="screen" id="screen4">
+        <h1 class="title">ยินดีต้อนรับสู่เกมทายใจ</h1>
+        <p class="subtitle">ทายผิดโดนระเบิดบึ้ม ทายถูกได้จุ๊บๆน้าา<br>เริ่มกันเลยยย</p>
+        <div class="instruction">กดที่ใดก็ได้เพื่อไปต่อ</div>
+    </div>
+    
+    <!-- Question screens -->
+    <div class="screen" id="screen5">
+        <h1 class="title">คำถามที่ 1</h1>
+        <p class="subtitle">วาฬในแมพ fishing simulator ชื่ออะไร</p>
+        <div class="input-container">
+            <input type="text" class="input-field" id="answer1" placeholder="พิมพ์คำตอบที่นี่">
+            <button class="submit-btn" id="submit1">ตอบ</button>
+        </div>
+    </div>
+    
+    <div class="screen" id="screen6">
+        <h1 class="title">คำถามที่ 2</h1>
+        <p class="subtitle">เราชอบสีอะไร พิมพ์มาให้ได้ 2 สี</p>
+        <p class="warning" id="colorWarning" style="display:none;">จะอินเตอร์ทำไม พิมพ์ภาษาไทยสิ</p>
+        <div class="input-container">
+            <div class="input-row">
+                <input type="text" class="input-field color-input" id="color1" placeholder="สีแรก">
+                <input type="text" class="input-field color-input" id="color2" placeholder="สีที่สอง">
+            </div>
+            <button class="submit-btn" id="submit2">ตอบ</button>
+        </div>
+    </div>
+    
+    <div class="screen" id="screen7">
+        <h1 class="title">คำถามที่ 3</h1>
+        <p class="subtitle">เขียนชื่อเกมที่เราชอบมา 2 เกม</p>
+        <div class="input-container">
+            <div class="input-row">
+                <input type="text" class="input-field game-input" id="game1" placeholder="เกมแรก">
+                <input type="text" class="input-field game-input" id="game2" placeholder="เกมที่สอง">
+            </div>
+            <button class="submit-btn" id="submit3">ตอบ</button>
+        </div>
+    </div>
+    
+    <div class="screen" id="screen8">
+        <h1 class="title">คำถามสุดท้าย</h1>
+        <p class="subtitle">พิมพ์ชื่อ App(โซเชียล) ที่เราเกลียด</p>
+        <div class="input-container">
+            <input type="text" class="input-field" id="answer4" placeholder="พิมพ์คำตอบที่นี่">
+            <button class="submit-btn" id="submit4">ตอบ</button>
+        </div>
+    </div>
+    
+    <!-- Result screen -->
+    <div class="screen" id="screen9">
+        <h1 class="title">ขอบคุณที่เล่นมาถึงตรงนี้จ้า</h1>
+        <div class="message-box">
+            <p>เก่งมากตอบถูกหมด ไม่รู้ว่าผิดบ้างหรือเปล่าแต่เก่งมากที่มาถึงตรงนี้ได้</p>
+            <p>เลิศเลยล่ะ</p>
+        </div>
+        <div class="instruction">กดที่ใดก็ได้เพื่อไปต่อ</div>
+    </div>
+    
+    <!-- Apology screen -->
+    <div class="screen" id="screen10">
+        <h1 class="title">ขอโทษค่ะ...</h1>
+        <div class="message-box">
+            <p>ปีนี้อาจจะไม่ได้หรูหราเท่าการสร้างแมพมายคราฟปีที่แล้ว ขอโทษด้วยค่ะ</p>
+            <p>ฮึกๆๆๆแงๆๆๆ..ฮื่อออออออึก..ฮึกฮึกแงแงมงื้อหึกแงแง..แงๆๆฮื่อ..อึกมงื้อ..แงฮื่อฮื่อ..มงื้อหึกแงแง..แงๆๆฮื่อ..อึกมงื้อ..แงฮื่อฮื่อ..ฮึกๆๆๆแงๆๆๆ..ฮื่อออออออึก..ฮึกฮึกแงแงมงื้อหึกแงแง..แงๆๆฮื่อ..อึกมงื้อ..แงฮื่อฮื่อ..มงื้อหึกแงแง แง้</p>
+        </div>
+        <div class="instruction">กดที่ใดก็ได้เพื่อไปต่อ</div>
+    </div>
+    
+    <!-- Final screens -->
+    <div class="screen" id="screen11">
+        <h1 class="title">ต่อไปก็จะเป็นช่วงสุดท้ายแล้วน้าา</h1>
+        <div class="instruction">กดที่ใดก็ได้เพื่อไปต่อ</div>
+    </div>
+    
+    <div class="screen" id="screen12">
+        <h1 class="title">ไม่มีอะไรมาก</h1>
+        <div class="instruction">กดที่ใดก็ได้เพื่อไปต่อ</div>
+    </div>
+    
+    <div class="screen" id="screen13">
+        <h1 class="title">แค่จะบอกว่า...</h1>
+        <div class="instruction">กดที่ใดก็ได้เพื่อไปต่อ</div>
+    </div>
+    
+    <!-- Final message screen - NOW THIS IS THE LAST SCREEN! -->
+    <div class="screen" id="screen14">
+        <h1 class="title">Happy New Year และ Happy Anniversary 3ปีจ้าา</h1>
+        <div class="message-box scrollable-message">
+            <p>ขอให้ปีนี้เป็นปีที่ดี เงินทองไหลมาเทมา มั่งมีศรีสุขจ้า มีความสุขมากๆ ใช้ชีวิตดีๆ ขับรถระวังๆ อย่าซิ่งมาก</p>
+            <p>ขอให้เจอคนดีๆ เพื่อนดีๆ งานกงงานกลุ่มไม่มีตัวถ่วงมีคนช่วยทำงาน เจออาจารย์ดีๆให้คะแนนง่ายๆ</p>
+            <p>สอบได้คะแนนเยอะๆทุกวิชา อ่านโจทย์ทำได้หมดทุกข้อ สมองแล่นๆ ลื่นปรื้ดๆ นอนหลับเต็มอิ่ม สุขภาพร่างกายแข็งแรง</p>
+            <p>ขอให้ทำอะไรก็ไม่มีอุปสรรค หรือถ้ามีก็มีน้อยๆหน่อย ขยันทำมาหากินแบบนี้ไปเรื่อยๆนะจ๊ะ</p>
+            <p>ขอให้พ่อแม่ร่างกายแข็งแรงน้าา</p>
+            <p>ขอบคุณที่อยู่ด้วยกันมา3ปีนะลุงงง</p>
+        </div>
+        
+        <div class="final-input">
+            <p class="subtitle">พิมพ์ "สาธุ99" รับคำอวยพรจากพระแม่จีจี้สุดสวย</p>
+            <p class="subtitle">เลิศ ปัง น่ารักคาวาอี้</p>
+            <input type="text" class="final-input-field" id="finalAnswer" placeholder="พิมพ์คำตอบที่นี่">
+            <button class="submit-btn" id="submitFinal">ส่ง</button>
+        </div>
+    </div>
+    
+    <!-- End screen -->
+    <div class="end-message" id="endScreen">
+        <h1 class="end-title">จบแล้ว</h1>
+        <p class="subtitle">ขอบคุณที่เล่นจนจบน้า</p>
+        <button class="end-btn" id="endBtn">ตกลง</button>
+    </div>
+
+    <script>
+        // Initialize variables
+        let currentScreen = 1;
+        const screens = document.querySelectorAll('.screen');
+        const loveBtn = document.getElementById('loveBtn');
+        const dontLoveBtn = document.getElementById('dontLoveBtn');
+        const heartBackground = document.getElementById('heartBackground');
+        const floatingSquares = document.getElementById('floatingSquares');
+        const explosionContainer = document.getElementById('explosionContainer');
+        const gameModeText = document.getElementById('gameModeText');
+        
+        // Prevent scrolling
+        document.addEventListener('wheel', preventScroll, { passive: false });
+        document.addEventListener('touchmove', preventScroll, { passive: false });
+        document.addEventListener('keydown', preventScroll);
+        
+        function preventScroll(e) {
+            if (e.type === 'keydown') {
+                if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown'].includes(e.code)) {
+                    e.preventDefault();
+                }
+            } else {
+                e.preventDefault();
+            }
+        }
+        
+        // Create floating squares
+        for (let i = 0; i < 40; i++) {
+            const square = document.createElement('div');
+            square.classList.add('square');
+            const size = Math.random() * 80 + 20;
+            square.style.width = `${size}px`;
+            square.style.height = `${size}px`;
+            square.style.left = `${Math.random() * 100}%`;
+            square.style.top = `${Math.random() * 100}%`;
+            square.style.animationDuration = `${Math.random() * 10 + 10}s`;
+            square.style.animationDelay = `${Math.random() * 5}s`;
+            square.style.backgroundColor = `rgba(255, ${Math.random() * 100 + 50}, ${Math.random() * 100 + 150}, 0.1)`;
+            floatingSquares.appendChild(square);
+        }
+        
+        // Create heart background - อลังการมากขึ้น!
+        for (let i = 0; i < 80; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDuration = `${Math.random() * 20 + 10}s`;
+            heart.style.animationDelay = `${Math.random() * 10}s`;
+            const heartSize = Math.random() * 30 + 15;
+            heart.style.fontSize = `${heartSize}px`;
+            
+            // Random heart colors - shades of pink
+            const pinkShades = ['#ff1493', '#ff69b4', '#ff85c1', '#ffa6d0', '#ffc2e0'];
+            heart.style.color = pinkShades[Math.floor(Math.random() * pinkShades.length)];
+            
+            heartBackground.appendChild(heart);
+        }
+        
+        // Screen navigation - CLICK ANYWHERE TO CONTINUE
+        function showScreen(screenNumber) {
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(`screen${screenNumber}`).classList.add('active');
+            currentScreen = screenNumber;
+            
+            // Special handling for screen 2
+            if (screenNumber === 2) {
+                resetLoveButton();
+            }
+        }
+        
+        // Click anywhere to continue for most screens
+        document.addEventListener('click', function(event) {
+            // Don't trigger if clicking on input fields or buttons
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON' || 
+                event.target.classList.contains('submit-btn') || event.target.classList.contains('btn')) {
+                return;
+            }
+            
+            // Check which screen is active and handle accordingly
+            if (currentScreen === 1) {
+                showScreen(2);
+            } 
+            else if (currentScreen === 3) {
+                showScreen(4);
+            }
+            else if (currentScreen === 4) {
+                showScreen(5);
+            }
+            else if (currentScreen === 9) {
+                showScreen(10);
+            }
+            else if (currentScreen === 10) {
+                showScreen(11);
+            }
+            else if (currentScreen === 11) {
+                showScreen(12);
+            }
+            else if (currentScreen === 12) {
+                showScreen(13);
+            }
+            else if (currentScreen === 13) {
+                showScreen(14); // นี่คือหน้าอวยพรสุดท้าย!
+            }
+        });
+        
+        // Screen 2: Love buttons - ปุ่ม "รัก" สามารถกดได้เลย!
+        loveBtn.addEventListener('click', () => {
+            if (isLoveBtnFullscreen) {
+                // ถ้าปุ่มเต็มจอแล้วก็ไปต่อ
+                showScreen(3);
+            } else {
+                // ถ้ายังไม่เต็มจอก็ไปต่อได้เลย
+                showScreen(3);
+            }
+        });
+        
+        let loveBtnSize = 1;
+        let dontLoveBtnClicks = 0;
+        let isLoveBtnFullscreen = false;
+        
+        function resetLoveButton() {
+            loveBtnSize = 1;
+            loveBtn.style.transform = 'scale(1)';
+            loveBtn.classList.remove('love-fullscreen');
+            loveBtn.style.position = '';
+            loveBtn.style.width = '';
+            loveBtn.style.height = '';
+            loveBtn.style.left = '';
+            loveBtn.style.top = '';
+            loveBtn.style.borderRadius = '';
+            loveBtn.style.zIndex = '';
+            loveBtn.style.fontSize = '';
+            loveBtn.style.display = '';
+            loveBtn.style.animation = '';
+            dontLoveBtnClicks = 0;
+            isLoveBtnFullscreen = false;
+            
+            // Reset don't love button position
+            dontLoveBtn.style.position = '';
+            dontLoveBtn.style.left = '';
+            dontLoveBtn.style.top = '';
+            dontLoveBtn.style.transform = '';
+            dontLoveBtn.style.fontSize = '';
+            dontLoveBtn.style.opacity = '1';
+            
+            // Hide continue instruction
+            document.getElementById('screen2Continue').style.display = 'none';
+            
+            // Update game mode text
+            gameModeText.textContent = "กด 'รัก' เพื่อไปต่อ หรือลองกด 'ไม่รัก' ดูสิ!";
+        }
+        
+        dontLoveBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent triggering the document click
+            
+            dontLoveBtnClicks++;
+            
+            // Love button gets bigger
+            loveBtnSize += 0.15;
+            loveBtn.style.transform = `scale(${loveBtnSize})`;
+            
+            // Move don't love button randomly
+            const maxX = window.innerWidth - dontLoveBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - dontLoveBtn.offsetHeight - 50;
+            
+            // ทำให้ปุ่มเล็กลงและจางลง
+            const newScale = Math.max(0.3, 1 - (dontLoveBtnClicks * 0.1));
+            const newOpacity = Math.max(0.3, 1 - (dontLoveBtnClicks * 0.1));
+            
+            dontLoveBtn.style.transform = `scale(${newScale})`;
+            dontLoveBtn.style.opacity = newOpacity;
+            
+            // Random position
+            let randomX, randomY;
+            let attempts = 0;
+            
+            // พยายามไม่ให้ปุ่มไปอยู่ใกล้ปุ่มรักเกินไป
+            do {
+                randomX = Math.random() * maxX + 25;
+                randomY = Math.random() * maxY + 25;
+                attempts++;
+                
+                // ตรวจสอบระยะห่างจากปุ่มรัก
+                const loveBtnRect = loveBtn.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(randomX - loveBtnRect.left, 2) + 
+                    Math.pow(randomY - loveBtnRect.top, 2)
+                );
+                
+                if (distance > 100 || attempts > 10) break;
+            } while (true);
+            
+            dontLoveBtn.style.position = 'fixed';
+            dontLoveBtn.style.left = `${randomX}px`;
+            dontLoveBtn.style.top = `${randomY}px`;
+            dontLoveBtn.style.transition = 'all 0.3s ease';
+            
+            // Update game mode text
+            if (dontLoveBtnClicks === 1) {
+                gameModeText.textContent = "ว้าว! ปุ่ม 'รัก' ใหญ่ขึ้นแล้ว!";
+            } else if (dontLoveBtnClicks === 2) {
+                gameModeText.textContent = "ใหญ่อีกแล้ว! อยากให้ใหญ่แค่ไหนนะ?";
+            } else if (dontLoveBtnClicks === 3) {
+                gameModeText.textContent = "โอ้โห! ใหญ่เต็มจอเลย!";
+            }
+            
+            // After 3 clicks, love button takes full screen
+            if (dontLoveBtnClicks >= 3 && !isLoveBtnFullscreen) {
+                loveBtn.classList.add('love-fullscreen');
+                isLoveBtnFullscreen = true;
+                
+                // Show continue instruction
+                document.getElementById('screen2Continue').style.display = 'block';
+                
+                // Update game mode text
+                gameModeText.textContent = "เยี่ยม! ตอนนี้ปุ่ม 'รัก' เต็มจอแล้ว! กดเลย~";
+                
+                // Add pulsing effect to love button
+                loveBtn.style.animation = 'pulse 0.5s infinite';
+            }
+            
+            // After 5 clicks, ปุ่ม "ไม่รัก" จะเล็กลงมากและไวขึ้น
+            if (dontLoveBtnClicks >= 5) {
+                dontLoveBtn.style.transition = 'all 0.15s ease';
+                gameModeText.textContent = "ไม่รักอีกละ! ปุ่ม 'ไม่รัก' เล็กลงแล้ว!";
+            }
+            
+            // After 8 clicks, ปุ่ม "ไม่รัก" จะวิ่งหนีเร็วมาก
+            if (dontLoveBtnClicks >= 8) {
+                dontLoveBtn.style.transition = 'all 0.08s ease';
+                gameModeText.textContent = "วิ่งเร็วมาก! แต่ยังจับได้อยู่นะ~";
+            }
+        });
+        
+        // Question 1: Whale name
+        document.getElementById('submit1').addEventListener('click', checkAnswer1);
+        document.getElementById('answer1').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkAnswer1();
+        });
+        
+        function checkAnswer1() {
+            const answer = document.getElementById('answer1').value.toLowerCase().trim();
+            const correctAnswers = ['moby', 'โมบี้'];
+            const isCorrect = correctAnswers.includes(answer);
+            
+            if (isCorrect) {
+                showKissGif();
+                setTimeout(() => {
+                    showScreen(6);
+                }, 3000);
+            } else {
+                createSuperExplosion();
+                // Show random wrong image
+                setTimeout(() => {
+                    showWrongImage();
+                }, 1000);
+            }
+        }
+        
+        // Question 2: Colors
+        document.getElementById('submit2').addEventListener('click', checkAnswer2);
+        
+        function checkAnswer2() {
+            const color1 = document.getElementById('color1').value.toLowerCase().trim().replace('สี', '');
+            const color2 = document.getElementById('color2').value.toLowerCase().trim().replace('สี', '');
+            const colorWarning = document.getElementById('colorWarning');
+            
+            // Check if answers are in English
+            const englishColors = ['purple', 'green', 'black', 'red', 'blue', 'yellow', 'pink'];
+            const isEnglish1 = englishColors.includes(color1);
+            const isEnglish2 = englishColors.includes(color2);
+            
+            if (isEnglish1 || isEnglish2) {
+                colorWarning.style.display = 'block';
+                // Clear inputs
+                document.getElementById('color1').value = '';
+                document.getElementById('color2').value = '';
+                return;
+            }
+            
+            // Thai color names
+            const thaiColors = ['ม่วง', 'เขียว', 'ดำ', 'แดง', 'น้ำเงิน', 'เหลือง', 'ชมพู'];
+            const isCorrect1 = thaiColors.includes(color1);
+            const isCorrect2 = thaiColors.includes(color2);
+            
+            if (isCorrect1 && isCorrect2 && color1 !== color2) {
+                colorWarning.style.display = 'none';
+                showKissGif();
+                setTimeout(() => {
+                    showScreen(7);
+                }, 3000);
+            } else {
+                createSuperExplosion();
+                setTimeout(() => {
+                    showWrongImage();
+                }, 1000);
+            }
+        }
+        
+        // Question 3: Games
+        document.getElementById('submit3').addEventListener('click', checkAnswer3);
+        
+        function checkAnswer3() {
+            const game1 = document.getElementById('game1').value.toLowerCase().trim();
+            const game2 = document.getElementById('game2').value.toLowerCase().trim();
+            
+            // Allowed games (case insensitive, space insensitive)
+            const allowedGames = [
+                'call of duty', 'minecraft', 'roblox', 'planet zoo', 
+                'the sims4', 'the sims 4', 'honkai star rail', 'love and deepspace'
+            ];
+            
+            // Normalize input (remove spaces for comparison)
+            const normalize = (str) => str.replace(/\s+/g, '');
+            
+            const normalizedGame1 = normalize(game1);
+            const normalizedGame2 = normalize(game2);
+            
+            let isGame1Valid = false;
+            let isGame2Valid = false;
+            
+            // Check if games are in the allowed list
+            for (const game of allowedGames) {
+                const normalizedAllowed = normalize(game);
+                if (normalizedGame1 === normalizedAllowed) isGame1Valid = true;
+                if (normalizedGame2 === normalizedAllowed) isGame2Valid = true;
+            }
+            
+            if (isGame1Valid && isGame2Valid && game1 !== game2) {
+                showKissGif();
+                setTimeout(() => {
+                    showScreen(8);
+                }, 3000);
+            } else {
+                createSuperExplosion();
+                setTimeout(() => {
+                    showWrongImage();
+                }, 1000);
+            }
+        }
+        
+        // Question 4: Hated app
+        document.getElementById('submit4').addEventListener('click', checkAnswer4);
+        document.getElementById('answer4').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkAnswer4();
+        });
+        
+        function checkAnswer4() {
+            const answer = document.getElementById('answer4').value.toLowerCase().trim();
+            const correctAnswer = 'tiktok';
+            
+            if (answer === correctAnswer) {
+                showKissGif();
+                setTimeout(() => {
+                    showScreen(9);
+                }, 3000);
+            } else {
+                createSuperExplosion();
+                setTimeout(() => {
+                    showWrongImage();
+                }, 1000);
+            }
+        }
+        
+        // Final answer - ONLY IN SCREEN 14 (LAST SCREEN)
+        document.getElementById('submitFinal').addEventListener('click', checkFinalAnswer);
+        document.getElementById('finalAnswer').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkFinalAnswer();
+        });
+        
+        function checkFinalAnswer() {
+            const answer = document.getElementById('finalAnswer').value.toLowerCase().trim();
+            
+            if (answer === 'สาธุ99') {
+                // Create confetti effect
+                createConfetti();
+                setTimeout(() => {
+                    document.getElementById('endScreen').style.display = 'block';
+                }, 3000);
+            } else if (answer === '69') {
+                // Show slap image 1
+                showSlapImage('slap1.jpg');
+            } else if (answer === '67') {
+                // Show slap image 2
+                showSlapImage('slap2.jpg');
+            } else {
+                alert('พิมพ์ "สาธุ99" เพื่อรับคำอวยพรนะจ๊ะ');
+            }
+        }
+        
+        document.getElementById('endBtn').addEventListener('click', () => {
+            document.getElementById('endScreen').style.display = 'none';
+        });
+        
+        // Effect functions - เปลี่ยนเป็น kiss.gif!
+        function showKissGif() {
+            const kissGif = document.createElement('img');
+            kissGif.classList.add('kiss-gif');
+            kissGif.src = 'kiss.gif';
+            kissGif.alt = 'จุ๊บๆ';
+            kissGif.style.width = '400px';
+            kissGif.style.height = '400px';
+            
+            // ถ้าไม่มีไฟล์ kiss.gif ให้ใช้ fallback
+            kissGif.onerror = function() {
+                this.onerror = null;
+                this.src = 'https://i.giphy.com/media/26tknCqiJrBQG6DrC/giphy.gif'; // fallback GIF
+                this.style.width = '400px';
+                this.style.height = '400px';
+            };
+            
+            document.body.appendChild(kissGif);
+            
+            // ลบออกหลังจาก 3 วินาที
+            setTimeout(() => {
+                kissGif.remove();
+            }, 3000);
+        }
+        
+        // ระเบิดอลังการระดับสุดยอด!
+        function createSuperExplosion() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            // Screen shake effect
+            document.body.classList.add('screen-shake');
+            setTimeout(() => {
+                document.body.classList.remove('screen-shake');
+            }, 500);
+            
+            // Mega explosion
+            const megaExplosion = document.createElement('div');
+            megaExplosion.classList.add('explosion');
+            megaExplosion.style.left = `${centerX}px`;
+            megaExplosion.style.top = `${centerY}px`;
+            megaExplosion.style.background = 'radial-gradient(circle, #ff0000 0%, #ff5500 20%, #ffaa00 40%, #ffff00 60%, transparent 80%)';
+            megaExplosion.style.width = '0px';
+            megaExplosion.style.height = '0px';
+            megaExplosion.style.boxShadow = '0 0 100px #ff0000, 0 0 150px #ff5500';
+            
+            explosionContainer.appendChild(megaExplosion);
+            
+            // Animate mega explosion
+            const megaAnim = megaExplosion.animate([
+                { width: '0px', height: '0px', opacity: 1 },
+                { width: '600px', height: '600px', opacity: 0.9 },
+                { width: '1000px', height: '1000px', opacity: 0 }
+            ], {
+                duration: 1000,
+                easing: 'ease-out'
+            });
+            
+            // Multiple shockwaves
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const shockwave = document.createElement('div');
+                    shockwave.classList.add('shockwave');
+                    shockwave.style.left = `${centerX}px`;
+                    shockwave.style.top = `${centerY}px`;
+                    
+                    explosionContainer.appendChild(shockwave);
+                    
+                    shockwave.animate([
+                        { width: '0px', height: '0px', opacity: 0.7, borderWidth: '5px' },
+                        { width: '800px', height: '800px', opacity: 0 }
+                    ], {
+                        duration: 1200,
+                        easing: 'ease-out',
+                        delay: i * 200
+                    });
+                    
+                    setTimeout(() => {
+                        shockwave.remove();
+                    }, 1200);
+                }, i * 200);
+            }
+            
+            // Massive amount of particles
+            for (let i = 0; i < 200; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.classList.add('explosion-particle');
+                    particle.style.left = `${centerX}px`;
+                    particle.style.top = `${centerY}px`;
+                    const colors = ['#ff0000', '#ff5500', '#ffaa00', '#ffff00', '#ffffff'];
+                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.width = `${Math.random() * 10 + 5}px`;
+                    particle.style.height = particle.style.width;
+                    
+                    explosionContainer.appendChild(particle);
+                    
+                    // Random direction and distance
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 150 + Math.random() * 300;
+                    const targetX = centerX + Math.cos(angle) * distance;
+                    const targetY = centerY + Math.sin(angle) * distance;
+                    
+                    particle.animate([
+                        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                        { transform: `translate(${targetX - centerX}px, ${targetY - centerY}px) scale(0.1)`, opacity: 0 }
+                    ], {
+                        duration: 1000 + Math.random() * 800,
+                        easing: 'ease-out'
+                    });
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1800);
+                }, Math.random() * 300);
+            }
+            
+            // Fireballs
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const fire = document.createElement('div');
+                    fire.classList.add('fire');
+                    fire.style.left = `${centerX}px`;
+                    fire.style.top = `${centerY}px`;
+                    fire.style.width = `${Math.random() * 30 + 15}px`;
+                    fire.style.height = fire.style.width;
+                    
+                    explosionContainer.appendChild(fire);
+                    
+                    const fireAngle = Math.random() * Math.PI * 2;
+                    const fireDistance = 80 + Math.random() * 200;
+                    const fireTargetX = centerX + Math.cos(fireAngle) * fireDistance;
+                    const fireTargetY = centerY + Math.sin(fireAngle) * fireDistance;
+                    
+                    fire.animate([
+                        { transform: 'scale(1)', opacity: 1 },
+                        { transform: 'scale(2)', opacity: 0.8 },
+                        { transform: `translate(${fireTargetX - centerX}px, ${fireTargetY - centerY}px) scale(0.3)`, opacity: 0 }
+                    ], {
+                        duration: 800 + Math.random() * 500,
+                        easing: 'ease-out'
+                    });
+                    
+                    setTimeout(() => {
+                        fire.remove();
+                    }, 1300);
+                }, Math.random() * 400);
+            }
+            
+            // Smoke clouds
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const smoke = document.createElement('div');
+                    smoke.classList.add('smoke');
+                    smoke.style.left = `${centerX}px`;
+                    smoke.style.top = `${centerY}px`;
+                    smoke.style.width = `${Math.random() * 50 + 20}px`;
+                    smoke.style.height = smoke.style.width;
+                    
+                    explosionContainer.appendChild(smoke);
+                    
+                    const smokeAngle = Math.random() * Math.PI * 2;
+                    const smokeDistance = 100 + Math.random() * 250;
+                    const smokeTargetX = centerX + Math.cos(smokeAngle) * smokeDistance;
+                    const smokeTargetY = centerY + Math.sin(smokeAngle) * smokeDistance;
+                    
+                    smoke.animate([
+                        { transform: 'scale(0.3)', opacity: 0.7 },
+                        { transform: `translate(${smokeTargetX - centerX}px, ${smokeTargetY - centerY}px) scale(3)`, opacity: 0 }
+                    ], {
+                        duration: 2000 + Math.random() * 1000,
+                        easing: 'ease-out'
+                    });
+                    
+                    setTimeout(() => {
+                        smoke.remove();
+                    }, 3000);
+                }, Math.random() * 500);
+            }
+            
+            // Remove mega explosion after animation
+            megaAnim.onfinish = () => {
+                megaExplosion.remove();
+            };
+        }
+        
+        function showWrongImage() {
+            // Randomly select a noy image (1-9) - ใช้ .jpg
+            const randomNoy = Math.floor(Math.random() * 9) + 1;
+            const imageUrl = `noy${randomNoy}.jpg`;
+            
+            // Create image element
+            const wrongImage = document.createElement('img');
+            wrongImage.classList.add('wrong-image');
+            wrongImage.src = imageUrl;
+            wrongImage.alt = `หน้างอน ${randomNoy}`;
+            wrongImage.onerror = function() {
+                // If image doesn't exist, show emoji instead
+                this.onerror = null;
+                this.src = '';
+                this.style.width = '400px';
+                this.style.height = '400px';
+                this.style.backgroundColor = '#ff1493';
+                this.style.display = 'flex';
+                this.style.alignItems = 'center';
+                this.style.justifyContent = 'center';
+                this.style.fontSize = '10rem';
+                this.style.borderRadius = '20px';
+                this.innerHTML = '😠';
+            };
+            
+            document.body.appendChild(wrongImage);
+            
+            setTimeout(() => {
+                wrongImage.remove();
+            }, 3000);
+        }
+        
+        function showSlapImage(filename) {
+            // Create image element
+            const slapImage = document.createElement('img');
+            slapImage.classList.add('slap-image');
+            slapImage.src = filename;
+            slapImage.alt = 'Slap image';
+            slapImage.onerror = function() {
+                // If image doesn't exist, show emoji instead
+                this.onerror = null;
+                this.src = '';
+                this.style.width = '500px';
+                this.style.height = '400px';
+                this.style.backgroundColor = filename === 'slap1.jpg' ? '#ff1493' : '#ff69b4';
+                this.style.display = 'flex';
+                this.style.alignItems = 'center';
+                this.style.justifyContent = 'center';
+                this.style.fontSize = '10rem';
+                this.style.borderRadius = '20px';
+                this.innerHTML = filename === 'slap1.jpg' ? '👋' : '🤚';
+            };
+            
+            document.body.appendChild(slapImage);
+            
+            setTimeout(() => {
+                slapImage.remove();
+            }, 3000);
+        }
+        
+        function createConfetti() {
+            const colors = ['#ff1493', '#ff69b4', '#ff85c1', '#ffa6d0', '#ffc2e0', '#ffff00', '#00ff00', '#00ffff'];
+            
+            for (let i = 0; i < 300; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = `${Math.random() * 15 + 5}px`;
+                    confetti.style.height = `${Math.random() * 15 + 5}px`;
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    document.body.appendChild(confetti);
+                    
+                    // Animation
+                    const animation = confetti.animate([
+                        { top: '-20px', transform: 'rotate(0deg) scale(1)' },
+                        { top: '100vh', transform: 'rotate(1080deg) scale(0.3)' }
+                    ], {
+                        duration: Math.random() * 4000 + 3000,
+                        easing: 'cubic-bezier(0.1, 0.8, 0.9, 0.1)'
+                    });
+                    
+                    // Remove after animation
+                    animation.onfinish = () => {
+                        confetti.remove();
+                    };
+                }, Math.random() * 1000);
+            }
+            
+            // Add some heart confetti
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = `${Math.random() * 30 + 15}px`;
+                    confetti.style.height = `${Math.random() * 30 + 15}px`;
+                    confetti.style.borderRadius = '50%';
+                    confetti.innerHTML = '❤';
+                    confetti.style.fontSize = '25px';
+                    confetti.style.display = 'flex';
+                    confetti.style.alignItems = 'center';
+                    confetti.style.justifyContent = 'center';
+                    document.body.appendChild(confetti);
+                    
+                    // Animation
+                    const animation = confetti.animate([
+                        { top: '-30px', transform: 'rotate(0deg) scale(1)' },
+                        { top: '100vh', transform: 'rotate(1440deg) scale(0.2)' }
+                    ], {
+                        duration: Math.random() * 5000 + 4000,
+                        easing: 'cubic-bezier(0.1, 0.8, 0.9, 0.1)'
+                    });
+                    
+                    // Remove after animation
+                    animation.onfinish = () => {
+                        confetti.remove();
+                    };
+                }, Math.random() * 1500);
+            }
+        }
+        
+        // Add keyboard navigation for Enter key on inputs
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const activeElement = document.activeElement;
+                if (activeElement && activeElement.classList.contains('input-field')) {
+                    // Find the corresponding submit button
+                    const screen = activeElement.closest('.screen');
+                    if (screen) {
+                        const submitBtn = screen.querySelector('.submit-btn');
+                        if (submitBtn) {
+                            submitBtn.click();
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
